@@ -25,15 +25,18 @@ str_private_key = key.exportKey("PEM")
 #print(str_public_key)
 #print(str_private_key)
 
-
-msg_encrypted = public_key.encrypt(text_sha, 2048)
-# tentar gerar AES e depois RSA
-print(msg_encrypted)
-
+print(sha+"\n")
+sha_encrypted = public_key.encrypt(sha, 32)
+print(type(sha_encrypted))
 
 
+fkey = open('key.pem', 'w').write(str(str_public_key))
 
 fout = open('file_encrypted', 'w')
-fout.write(text)
+fout.write(str(text))
 fout.write('\n')
-fout.write(sha)
+fout.write(str(sha))
+fout.write('\n')
+fout.write(str(sha_encrypted))
+fout.write('\n')
+fout.write(str(str_public_key))
