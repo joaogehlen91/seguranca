@@ -8,7 +8,6 @@ escuro = f_escuro.read()
 
 chave = {}
 for i, j in zip(claro, escuro):
-    chave.update({j:i})
+    chave.update({i:j})
 
 print(chave)
-
