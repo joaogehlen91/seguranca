@@ -1,11 +1,12 @@
 from math import log
 from sys import argv
+from tree import *
 
 
-texto = 'teste_de_entropia'
+texto = 'a_casa_rosa'
 #texto = [chr(x) for x in xrange(256)]
-texto = '000011110011001101010101'
-base = 2
+#texto = '00001111001100000000111111101101010101'
+#base = 256
 
 
 # Calcula a frquencia da aparicao de cada caractere no texto e armazena no set 'freq'
@@ -14,6 +15,17 @@ for c in texto:
 	x = freq.get(c) or 0
 	freq.update({c: x+1})
 
+l = []
+for i in freq:
+	l.append(N(i, freq[i]))
+
+l.sort()
+print(l)
+
+
+print(huffmann(l))
+
+"""
 # p eh a probabilidade de massa
 acum = 0
 for i in freq:
@@ -22,3 +34,4 @@ for i in freq:
 acum = -acum
 
 print(acum)
+"""
