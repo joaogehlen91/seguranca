@@ -3,7 +3,8 @@ from sys import argv
 from tree import *
 
 
-texto = 'a_casa_rosa'
+texto = 'a_casa_amarela'
+texto = open(argv[1], 'rb').read()
 #texto = [chr(x) for x in xrange(256)]
 #texto = '00001111001100000000111111101101010101'
 #base = 256
@@ -19,11 +20,23 @@ l = []
 for i in freq:
 	l.append(N(i, freq[i]))
 
+
 l.sort()
 print(l)
 
+arvore = huffmann(l)
+array = bitarray(endian='big')
 
-print(huffmann(l))
+for i in texto:
+    array += arvore[i]
+
+print(array)
+
+open('saida_zip', 'wb').write(array.tobytes())
+
+
+
+
 
 """
 # p eh a probabilidade de massa
