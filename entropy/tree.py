@@ -32,7 +32,7 @@ class N:
         return ret
 
     def __lt__(self, o):
-        return self.f < o.f
+        return self.f > o.f
 
     def __repr__(self):
         return "N(%s,%f)" % (self.x, self.f)

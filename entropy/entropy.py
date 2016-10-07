@@ -3,48 +3,51 @@ from sys import argv
 from tree import *
 
 
-texto = 'a_casa_amarela'
-texto = open(argv[1], 'rb').read()
-#texto = [chr(x) for x in xrange(256)]
-#texto = '00001111001100000000111111101101010101'
-#base = 256
-
-
-# Calcula a frquencia da aparicao de cada caractere no texto e armazena no set 'freq'
+base = 256
 freq = {}
-for c in texto:
-	x = freq.get(c) or 0
-	freq.update({c: x+1})
+acum = 0
+
+
+def frequencia(texto): 
+    """Calcula a frequencia da aparicao de cada caractere no texto e armazena no set 'freq'"""
+    for c in texto:
+        x = freq.get(c) or 0
+        freq.update({c: x+1})
+    
+
+def entropy(texto):
+    frequencia(texto)
+    # p eh a probabilidade de massa
+    acum = 0
+    for i in freq:
+        p = float(freq[i]) / float(len(texto))
+        acum += p * log(p, base)
+    return -acum
+
+
+texto_orig = open(argv[1], 'rb').read()
+
+freq = {}
+entropy_orig = entropy(texto_orig)
 
 l = []
 for i in freq:
-	l.append(N(i, freq[i]))
-
+    l.append(N(i, freq[i]))
 
 l.sort()
-print(l)
-
 arvore = huffmann(l)
-array = bitarray(endian='big')
+array = bitarray()
 
-for i in texto:
+for i in texto_orig:
     array += arvore[i]
 
-print(array)
+texto_zip = array.tobytes()
 
-open('saida_zip', 'wb').write(array.tobytes())
+freq = {}
+entropy_zip = entropy(texto_zip)
+
+open('saida_zip', 'wb').write(texto_zip)
 
 
-
-
-
-"""
-# p eh a probabilidade de massa
-acum = 0
-for i in freq:
-	p = float(freq[i]) / float(len(texto))
-	acum += p * log(p, base)
-acum = -acum
-
-print(acum)
-"""
+print("Entropia do texto original: " + str(entropy_orig))
+print("Entropia do texto compactado: " + str(entropy_zip))
