@@ -1,12 +1,26 @@
-msg = 'bolabalacasarosafacafofafofo'
+lista = ['fofo', 'faca', 'bolo', 'fofo', 'fofa', 'tata', 'bola']
 
-size_token = 4
-tokens = []
-
-for i in xrange((len(msg) / size_token) + 1):
-    token = msg[0:size_token]
-    msg = msg[size_token:]
-    tokens.append(token)
+lista_padrao = {}
 
 
-print(tokens)
+for w in lista:
+	count = 0
+	padrao = ''
+	padrao_palavra = {}
+
+	for c in w:
+		if count == 0:
+			padrao_palavra.update({c: count})
+			padrao += str(count)
+			count += 1
+		else:
+			if padrao_palavra.get(c) == None:
+				padrao_palavra.update({c: count})
+				padrao += str(count)
+				count += 1
+			else:
+				padrao += str(padrao_palavra.get(c))
+	
+	lista_padrao.update({w: padrao})
+
+print(lista_padrao)
